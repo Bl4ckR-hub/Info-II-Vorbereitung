@@ -1,3 +1,8 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use camelCase" #-}
+
+import Data.List
+import Control.Monad.RWS (MonadState(state))
 data Prozess = Prozess {pid :: String, arrival :: Int, computing :: Int } deriving(Show)
 
 instance Eq Prozess where
@@ -79,3 +84,48 @@ fcfs_update_status :: State -> State
 fcfs_update_status state
     | null (new state) && null (ready state) && run state == idle = state
     | otherwise = fcfs_update_status (update_time (update_run (update_ready state)))
+
+--Aufgabe 6
+
+update_ready_sjf :: State -> State
+update_ready_sjf state@(State {new = []}) = state
+update_ready_sjf state@(State {new = n:ns, ready = [], time = t})
+    | arrival n > t = state
+    | otherwise = update_ready State {new = ns, run = run state, ready = [n], time = time state, chart = chart state}
+update_ready_sjf state@(State {new = n:ns, ready = r:rs, time = t})
+    | arrival n > t = state
+    | otherwise = update_ready State {new = ns, run = run state, ready = sort (r:rs ++ [n]), time = time state, chart = chart state}
+
+
+
+sjf_update_status :: State -> State
+sjf_update_status state
+    | null (new state) && null (ready state) && run state == idle = state
+    | otherwise = sjf_update_status (update_time (update_run (update_ready_sjf state)))
+
+-----------------------------------------------
+
+--Hilfsfunktion
+remove :: [Prozess] -> Prozess -> [Prozess]
+remove [] _ = []
+remove (x:xs) y
+    | x == y = xs
+    | otherwise = x : remove xs y
+
+update_ready_srtf :: State -> State
+update_ready_srtf state@(State {new = []}) = state
+update_ready_srtf state@(State {new = n:ns, ready = [], time = t})
+    | arrival n > t = state
+    | otherwise = update_ready State {new = ns, run = run state, ready = [n], time = time state, chart = chart state}
+update_ready_srtf state@(State {new = n:ns, ready = r:rs, time = t})
+    | arrival n > t = state
+    | otherwise = update_ready State {new = ns, run =  running, ready = final, time = time state, chart = chart state}
+    where
+        sorted = sort (r:rs ++ [n])
+        running = min (run state) (head sorted)
+        final = remove sorted running
+
+srtf_update_status :: State -> State
+srtf_update_status state
+    | null (new state) && null (ready state) && run state == idle = state
+    | otherwise = srtf_update_status (update_time (update_run (update_ready_srtf state)))
