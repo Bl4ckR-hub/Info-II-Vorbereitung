@@ -77,6 +77,14 @@ $N = \{START, BIN, NULL, OP\}$
 
 $T = \{0, 1, \wedge, \lor\}$
 
-$P = \{ \}
+$P = \{START \rightarrow BIN\ 1 | NULL\ 0 | 1 | 0;$ <br> $\ BIN \rightarrow BIN\ 1 | BIN\ 0 |OP\ \lor |OP\ \wedge| \epsilon;$<br>$ NULL \rightarrow OP\ \lor| OP\ \wedge | \epsilon;$<br>$ OP \rightarrow BIN\ 1 | NULL\ 0 \}$
+
+$S = \{START\}$
+
+### 3.
+
+$START \rightarrow NULL\ 0 \rightarrow OP\ \lor 0 \rightarrow BIN\ 1 \lor 0 \rightarrow OP\ \wedge 1 \lor 0 \rightarrow BIN\ 0 \wedge 1 \lor 0 \rightarrow \epsilon\ 0 \wedge 1 \lor 0 \rightarrow 0 \wedge 1 \lor 0$
+
+$START \rightarrow BIN\ 1 \rightarrow OP\ \lor 1 \rightarrow NULL\ 0 \lor 1 \rightarrow OP\ \wedge 0 \lor 1 \rightarrow BIN\ 1 \wedge 0 \lor 1 \rightarrow \epsilon\ 1\  \wedge 0\ \lor 1 \rightarrow 1\ \wedge 0\ \lor 1$
 
   
