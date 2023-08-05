@@ -115,3 +115,4 @@ Match!
 
 ## Aufgabe 3
 
+$P' = \{product \rightarrow factor;$<br>$factor \rightarrow id\ factorid;$<br>$factorid \rightarrow *\ factor\ |\ \epsilon;$<br>$sum \rightarrow id\ +\ sumList;$ <br> $sumList \rightarrow sum\ |\ (product) \}$
