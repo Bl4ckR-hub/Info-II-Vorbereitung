@@ -94,3 +94,29 @@ gehört  nicht zur Sprache aufgrund der Verknüpfung eines Wahrheitswertes mit e
 
 12. $\exists : ((Z < 2) \lor ((Z - 1) < 0))$<br>
 gehört nicht zur Sprache, da dem Existenzquantor eine Variable folgen müsste, das tut es hier aber nicht.
+
+
+## Aufgabe 4
+
+
+### 1.
+
+a\). $\forall X : (\exists Y: (X = Y))$<br>
+Liefert wahr, denn setze Y := X
+
+b\). $\forall X : (\forall Y : (X = Y))$<br>
+Liefert falsch, denn setze Y := X + 1
+
+c\). $\exists X : (\forall Y : (X = Y))$<br>
+Liefert falsch, denn setze Y := X + 1
+
+d\). $\exists X : (\exists Y : (X = Y))$<br>
+Liefert wahr, denn 3 = 3
+
+### 2.
+
+a\). $\exists X : (\exists Y: ((\neg (X = Y)) \wedge (quadrat(X) = quadrat(Y))))$<br>
+Liefert Falsch, denn damit die Quadrate von Zahlen gleich einander sind, müsse sie gleiche Beträge haben.
+
+b\). Falsch, impliziert aus a\).
+
