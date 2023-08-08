@@ -54,3 +54,20 @@ print(caesar(3, 'HELLOWORLD'))
 
 print(encode_caesar(3, caesar(3, 'helloworld')))
 print(encode_caesar(3, caesar(3, 'HELLOWORLD')))
+
+
+
+# One-Time-Pad 
+
+def one_time_pad_encode(string, key):
+    encode = ""
+    if (len(string) != len(key)): raise IndexError('Wrong Key')
+    for i in range(len(string)):
+        if string[i].upper() == string[i]:
+            encode += chr(ord('A') + ((ord(string[i]) + ord(key[i]) + 1) % 26))
+        else:
+            encode += chr(ord('a') + ((ord(string[i]) + ord(key[i]) + 1) % 26))
+    return encode
+
+
+print(one_time_pad_encode("XVMAERZCAESARTREFFENDOLCHENICHTVERGESSEN", "CTOSHBFEXKKSSMPJMYEXOPFRBYNZASDTZUXTSAWP"))
