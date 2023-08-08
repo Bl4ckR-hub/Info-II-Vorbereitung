@@ -120,3 +120,17 @@ Liefert Falsch, denn damit die Quadrate von Zahlen gleich einander sind, müsse 
 
 b\). Falsch, impliziert aus a\).
 
+c\). $\forall X : (\exists Y: ((dreieck(X) + dreieck(Y)) = quadrat(X)))$
+
+$\sum_{i = 1}^{X}{i} + \sum_{k = 1}^{Y}{k} = \sum_{j = 1}^{X}{(2j-1)}$
+
+$\Leftrightarrow \frac{X \cdot (X - 1) + Y \cdot (Y - 1)}{2} = X^2$
+
+$\Leftrightarrow \forall X \in \mathbb{Z}\ \exists Y \in \mathbb{Z} : Y^2 - Y + (-X^2 - X) = 0$
+
+$Y_{1,2} = \frac{1}{2} \pm \sqrt{X^2 + X + \frac{1}{4}}$
+
+$\Rightarrow \sqrt{4X^2 + 4X + 1} \in \mathbb{Z}$
+
+
+
