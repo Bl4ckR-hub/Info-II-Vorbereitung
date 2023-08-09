@@ -56,16 +56,27 @@ def one_time_pad_decrypt(key, message):
 
 def keygen(start_key, counter):
     start_key = start_key[::-1]
-    if (len(start_key) < 7):
-        raise IndexError('Your start_key is not long enough')
     key = ""
     for _ in range(counter):
+        key += start_key[len(start_key)-1]
         tmp = ""
-        res = caesar_encrypt(caesar_encrypt(start_key[6], start_key[4]), caesar_encrypt(start_key[1], start_key[0]))
+        res = one_time_pad_encrypt(one_time_pad_encrypt(start_key[len(start_key)-1], start_key[len(start_key)-3]), one_time_pad_encrypt(start_key[1], start_key[0]))
         tmp += res
-        for i in range(1, len(start_key)-1):
+        for i in range(0, len(start_key)-1):
             tmp += start_key[i]
-        print(tmp)
-        key += tmp[len(tmp)-1]
+        start_key = tmp
     return key
-            
+
+
+print('Give me the message, you want to send: ')
+message = input()
+message = encode(message)
+
+
+print('This is your key: ')
+start = message[::-1]
+start = start[0::len(start)//4]
+print(keygen(start, len(message)))
+
+print('This is the encrypted message: ')
+print(one_time_pad_encrypt(keygen(start, len(message)), message))
