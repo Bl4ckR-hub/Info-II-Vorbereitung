@@ -50,3 +50,22 @@ def one_time_pad_decrypt(key, message):
             raise ValueError('Key not in alphabet')
         encrypted += caesar_decrypt(alphabet[(alphabet.index(k)+1) % alphabet_length], c)
     return encrypted
+
+# Nun brauchen wir einen zufälligen Schlüsselgenerator
+# Dafür nutzen wir LInearen Schiebregister mit der Rückkopplungsfunktion der Verschlüssleungsfunktio  der Caesar-Verschlüsselung
+
+def keygen(start_key, counter):
+    start_key = start_key[::-1]
+    if (len(start_key) < 7):
+        raise IndexError('Your start_key is not long enough')
+    key = ""
+    for _ in range(counter):
+        tmp = ""
+        res = caesar_encrypt(caesar_encrypt(start_key[6], start_key[4]), caesar_encrypt(start_key[1], start_key[0]))
+        tmp += res
+        for i in range(1, len(start_key)-1):
+            tmp += start_key[i]
+        print(tmp)
+        key += tmp[len(tmp)-1]
+    return key
+            
