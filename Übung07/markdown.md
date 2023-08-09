@@ -132,5 +132,3 @@ $Y_{1,2} = \frac{1}{2} \pm \sqrt{X^2 + X + \frac{1}{4}}$
 
 $\Rightarrow \sqrt{4X^2 + 4X + 1} \in \mathbb{Z}$
 
-
-
