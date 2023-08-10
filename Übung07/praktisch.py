@@ -1,3 +1,5 @@
+# Niht-Rekursiver Parser in Python
+
 T = ('id', '(', ')', ':=', '+', '-', '*', '/')
 
 N = (0,1,2,3,4,5,6,7,8,9)
@@ -52,4 +54,27 @@ def error():
 def parse(input):
     stack = [0]
     while (len(stack) > 0):
-        if ()
+        if (stack[0] in N):
+            if (input[0] not in parse_table[stack[0]]): error()
+            val = parse_table[stack.pop(0)][input[0]]
+            if (isinstance(val, tuple)):
+                for v in reversed(val):
+                    stack.insert(0,v)
+            else:
+                stack.insert(0, val)
+        elif (stack[0] in T):
+            if(len(input) == 0): error()
+            if (stack[0] == input[0]):
+                input.pop(0)
+                stack.pop(0)
+            else:
+                error()
+        else:
+            error()
+    if (len(input) > 1): error()
+    print('Successful')
+    return stack
+
+
+inp = input()
+print(parse(input_prep(inp)))
