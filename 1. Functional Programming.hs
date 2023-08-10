@@ -5,7 +5,7 @@ f x = x*x + x
 
 --Operation
 (==>) :: Bool -> Bool -> Bool
-(==>) x y = ((not x) || y)
+(==>) x y = not x || y
 
 --Constant Function
 e :: Double

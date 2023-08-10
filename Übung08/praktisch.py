@@ -24,12 +24,23 @@ def showCNF(clauses):
 
 # Aufgabe 2
 def alphaLit(lit, alpha):
-    return lit[0] in alpha == lit[1]
+    return (lit[0] in alpha and lit[1]) or (not lit[0] in alpha and not lit[1])
 
 def alphaClause(clause, alpha):
     if (len(clause) == 0): return False
     return alphaLit(clause[0], alpha) or alphaClause(clause[1:], alpha)
 
 def alphaCNF(clauses, alpha):
-    if (len(clauses) == 0): return False
-    return alphaClause(clauses[0], alpha) or alphaCNF(clauses[1:], alpha)
+    if (len(clauses) == 0): return True
+    return alphaClause(clauses[0], alpha) and alphaCNF(clauses[1:], alpha)
+
+# Aufgabe 3
+alphabet = ['A', 'B']
+
+print("Unerfüllende Belegung: %s" %(showCNF(c)))
+print(alphaCNF(c, alphabet))
+
+a = [('B', True)]
+c = [a,b]
+print("Erfüllende Belegung: %s" %(showCNF(c)))
+print(alphaCNF(c, alphabet))
