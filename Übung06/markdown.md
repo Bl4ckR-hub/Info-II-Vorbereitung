@@ -4,59 +4,57 @@
 
 ### 1.
 
-$FIRST(program) = FIRST(stmtList) = \{\epsilon,\ FIRST(stmt\ stmtList)\} = \{id\ :=,\ \epsilon\}$
+$FIRST(program) = FIRST(stmtList) = \{\epsilon,\ FIRST(stmt\ stmList)\} = \{\epsilon,\ FIRST(id\ :=\ expr\ stmtList)\} = \{id, \epsilon\}$
 
-$FIRST(stmtList) = \{id,\ \epsilon\}$
+$FIRST(stmtList) = \{\epsilon, id\}$
 
-$FIRST(stmt) = \{id\}$
+$FIRST(stmt) = FIRST(id\ :=\ expr) = \{id\}$
 
-$FIRST(expr) = FIRST(term\ termTail) = \{FIRST(factor\ factorTail),\ FIRST(factor\ factorTail\ addOp\ term\ termTail)\}$  = $\{$\($, id\}$
+$FIRST(expr) = FIRST(term\ termTail) = FIRST(factor\ factorTail\ termTail) = \{FIRST((\ expr\ )\ factorTail\ termTail),\ FIRST(id\ factorTail\ termTail)\} = \{(, id\}$
 
-$FIRST(termTail) = \{\epsilon,\ FIRST(addOP\ term\ termTail)\} = \{\epsilon,\ +,\ -\}$
+$FIRST(termTail) = \{\epsilon,\ FIST(addOp\ term\ termTail)\} = \{\epsilon,\ FIRST(+\ term\ termTail),\ FIRST(-\ term\ termTail)\} = \{\epsilon,\ +,\ -\}$
 
-$FIRST(term) = FIRST(factor factorTail) = \{$\($,\ id\}$
+$FIRST(term) = FIRST(factor\ factorTail) = \{(, id\}$
 
-$FIRST(factorTail) = \{\epsilon,\ FIRST(multOp\ factor\ factorTail)\} = \{\epsilon,\ *,\ /\}$
+$FIRST(factorTail) = \{FIRST(multOp factor factorTail),\ \epsilon\} = \{*,\ /,\ \epsilon\}$
 
-$FIRST(factor) = \{$\($,\ id\}$
+$FIRST(factor) = \{(,\ id\}$
 
 $FIRST(addOp) = \{+,\ -\}$
 
 $FIRST(multOp) = \{*,\ /\}$
-
 ### 2.
 
-$FOLLOW(program) = §§$
+$FOLLOW(program) = \{\$\$\}$
 
-$FOLLOW(stmtList) = §§$
+$FOLLOW(stmtList) = FOLLOW(program) \cup FOLLOW(stmtList) = \{\$\$\}$
 
-$FOLLOW(stmt) = \{id, §§\}$
+$FOLLOW(stmt) = FIRST(stmtList)$ \\ $\{\epsilon\} \cup FOLLOW(stmtList) = \{id,\ \$\$\}$
 
-$FOLLOW(expr) = \{id, $\), $§§\}$
+$FOLLOW(expr) = FIRST()) \cup FOLLOW(stmt) = \{),\ id,\ \$\$\}$
 
-$FOLLOW(termTail) = \{§§,\ +,\ -\}$
+$FOLLOW(termTail) = FOLLOW(expr) = \{),\ id,\ \$\$\}$
 
-$FOLLOW(term) = \{§§,\ +,\ -\}$
+$FOLLOW(term) = FIRST(termTail)$\ $\{\epsilon\} \cup FOLLOW(expr) \cup FOLLOW(termTail) = \{+,\ -,\ ),\ id,\ \$\$\}$
 
-$FOLLOW(factorTail) = \{§§,\ *,\ /\}$
+$FOLLOW(factorTail) = FOLLOW(term) = \{+,\ -,\ ),\ id,\ \$\$\}$
 
-$FOLLOW(factor) = \{§§,\ *,\ /\}$
+$FOLLOW(factor) = FIRST(factorTail)$\ $\{\epsilon\} \cup FOLLOW(term) \cup FIRST(factorTail) = \{*,\ /,¸+,\ -,\ ),\ id,\ \$\$\}$
 
-$FOLLOW(addOp) = \{$\(, $id\}$
+$FOLLOW(addOp) = FIRST(term) = \{(, id\}$
 
-$FOLLOW(multOp) = \{$\(, $id\}$
-
+$FOLLOW(multOp) = FIRST(factor) = \{(,\ id\}$
 ### 3.
 
 | | id | ( | ) | := | + | - | * | / | §§ |
 |-|-|-|-|-|-|-|-|-|-|
-|program| $program \rightarrow stmtList$ | | | | | | | $program \rightarrow stmtList$ |
-|stmtList| $stmtList \rightarrow stmt\ stmtList$ | | | | | | | $stmtList \rightarrow \epsilon$ |
+|program| $program \rightarrow stmtList$ | | | | | | | | $program \rightarrow stmtList$ |
+|stmtList| $stmtList \rightarrow stmt\ stmtList$ | | | | | | | | $stmtList \rightarrow \epsilon$ |
 |stmt| $stmt \rightarrow id\ :=\ expr$ | | | | | | |
 |expr| $expr \rightarrow term\ termTail$ | $expr \rightarrow term\ termTail$ |
-|termTail| | | | | $termTail \rightarrow addOp\ term\ termTail$ | $termTail \rightarrow addOp\ term\ termTail$ | | | $termTail \rightarrow \epsilon$ | 
+|termTail| $termTail \rightarrow \epsilon$ | | $termTail \rightarrow \epsilon$ | | $termTail \rightarrow addOp\ term\ termTail$ | $termTail \rightarrow addOp\ term\ termTail$ | | | $termTail \rightarrow \epsilon$ | 
 |term| $term \rightarrow factor\ factorTail$ | $term \rightarrow factor\ factorTail$ | 
-|factorTail| | | | | | | $factorTail \rightarrow multOp\ factor\ factorTail$ | $factorTail \rightarrow multOp\ factor\ factorTail$ | $factorTail \rightarrow \epsilon$ | 
+|factorTail| $factorTail \rightarrow \epsilon$ | | $factorTail \rightarrow \epsilon$ | | $factorTail \rightarrow \epsilon$ |  $factorTail \rightarrow \epsilon$ | $factorTail \rightarrow multOp\ factor\ factorTail$ | $factorTail \rightarrow multOp\ factor\ factorTail$ | $factorTail \rightarrow \epsilon$ | 
 |factor| $factor \rightarrow id$ | $factor \rightarrow (\ expr\ )$ |
 |addOp| | | | | $addOp \rightarrow +$ | $addOp \rightarrow -$ |
 |multOp| | | | | | | $multOp \rightarrow *$ | $multOp \rightarrow /$ |
